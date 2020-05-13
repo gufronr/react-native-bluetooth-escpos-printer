@@ -332,15 +332,17 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
             case REQUEST_CONNECT_DEVICE: {
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
-                    // Get the device MAC address
-                    String address = data.getExtras().getString(
-                            EXTRA_DEVICE_ADDRESS);
-                    // Get the BLuetoothDevice object
-                    if (adapter!=null && BluetoothAdapter.checkBluetoothAddress(address)) {
-                        BluetoothDevice device = adapter
-                                .getRemoteDevice(address);
-                        // Attempt to connect to the device
-                        mService.connect(device);
+                    if (data.getExtras() != null) {
+                        // Get the device MAC address
+                        String address = data.getExtras().getString(
+                                EXTRA_DEVICE_ADDRESS);
+                        // Get the BLuetoothDevice object
+                        if (adapter!=null && BluetoothAdapter.checkBluetoothAddress(address)) {
+                            BluetoothDevice device = adapter
+                                    .getRemoteDevice(address);
+                            // Attempt to connect to the device
+                            mService.connect(device);
+                        }
                     }
                 }
                 break;
